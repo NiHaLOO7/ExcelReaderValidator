@@ -1,0 +1,66 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 12-20-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-card icon-name="standard:case">
+        <span slot="title">Related Cases ({allCases.length})</span>
+        <hr class="slds-m-vertical_none" />
+        <div class="slds-m-around_medium">
+            <lightning-combobox 
+                label="Status Filter" 
+                options={filterOptions} 
+                value={selectedStatus} 
+                onchange={handleComboboxChange}
+                class="slds-m-bottom_small">
+            </lightning-combobox>
+            <template lwc:if={showCases}>
+                <div class="slds-grid slds-wrap">
+                    <template for:each={filteredCases} for:item="caseData">
+                        <div key={caseData.fields.Id.value} class="slds-col slds-box slds-m-horizontal_xx-small slds-m-top_xx-small slds-m-bottom_small slds-theme_shade">
+                            <table class="slds-table slds-table_cell-buffer slds-table_fixed-layout slds-no-row-hover slds-box">
+                                <tbody>
+                                    <tr>
+                                        <td class="slds-cell-wrap" colspan="2">
+                                            <span onclick={navigateToCase} data-id={caseData.fields.Id.value} class="slds-text-link">{caseData.fields.CaseNumber.value}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="slds-cell-wrap">
+                                            Subject:
+                                        </th>
+                                        <td class="slds-cell-wrap">
+                                            {caseData.fields.Subject.value}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="slds-cell-wrap">
+                                            Status:
+                                        </th>
+                                        <td class="slds-cell-wrap">
+                                           {caseData.fields.Status.value} 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="slds-cell-wrap">
+                                            Priority:
+                                        </th>
+                                        <td class="slds-cell-wrap">
+                                            {caseData.fields.Priority.value}    
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template lwc:else>
+                <p>No Case Records Found.</p>
+            </template>
+        </div> 
+    </lightning-card>
+</template>

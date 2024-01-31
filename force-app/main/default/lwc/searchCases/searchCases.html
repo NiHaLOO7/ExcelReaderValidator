@@ -1,0 +1,89 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 12-21-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-card title="Case DataTable" icon-name="custom:custom33">
+        <div class="slds-grid slds-m-around_medium slds-grid_vertical">
+
+            <div class=" slds-col slds-grid slds-gutters_direct slds-m-bottom_x-small">
+
+                <div class="slds-col slds-size_5-of-12">
+                    <lightning-checkbox-group
+                        label="Select Status"
+                        options={statusOptions}
+                        value={selectedStatus}
+                        onchange={handleStatusChange}
+                    ></lightning-checkbox-group>
+                </div>
+                <div class="slds-col">
+                    <lightning-input
+                        type="date"
+                        label="Date Opened From"
+                        value={openedFromDate}
+                        max={openedToDate}
+                        message-when-range-overflow="To date cannot be greater than From date"
+                        onchange={handleOpenedFromDateChange}
+                    ></lightning-input>
+                    <lightning-input
+                        type="date"
+                        label="Date Opened To"
+                        value={openedToDate}
+                        onchange={handleOpenedToDateChange}
+                        min={openedFromDate}
+                        message-when-range-underflow="To date cannot be smaller than From date"
+                    ></lightning-input>
+                </div>
+    
+            </div>
+
+            <div class="slds-grid slds-gutters slds-m-bottom_small">
+                <div class="slds-col slds-size_5-of-12">
+                    <lightning-combobox 
+                        label="Priority" 
+                        options={priorityOptions} 
+                        value={priority} 
+                        onchange={handleComboboxChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col">
+                    <lightning-input 
+                        type="text" 
+                        label="Case Number"
+                        value={caseNumber}
+                        onchange={handleCaseNumberChange}>
+                    </lightning-input>
+                </div>
+            </div>
+            <div class="slds-size_full">
+                <lightning-button
+                    label="Search"
+                    class="slds-float_right"
+                    onclick={handleSearch}
+                    variant="brand"
+                ></lightning-button>
+                <lightning-button
+                    label="Reset"
+                    class="slds-float_right slds-p-right_x-small"
+                    onclick={handleReset}
+                    variant="neutral"
+                ></lightning-button>
+                
+            </div>
+            <div class="slds-col slds-m-vertical_x-small">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={cases}
+                        columns={columns}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>
+                <template if:false={isDataAvailable}>
+                    <p class="slds-text-color_error slds-p-vertical_x-small slds-align_absolute-center">NO CASE RECORD FOUND</p>
+                </template>
+            </div>
+        </div> 
+    </lightning-card>
+</template>

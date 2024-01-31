@@ -1,0 +1,61 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 01-10-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-card title="Excel File Uploader">
+        <div class="slds-m-around_medium">
+            <lightning-input type="file" label="Upload Excel File" accept=".csv, .xlsx, .xls" onchange={handleFileChange}></lightning-input>
+            <template if:true={showTable}>
+                <div>
+                    <h2>File Data:</h2>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={displayedData}
+                        columns={columns}
+                        hide-checkbox-column
+                    ></lightning-datatable>
+                    <div class="slds-m-top_medium slds-size_xx-small slds-grid slds-grid_vertical">
+                        <div class="slds-text-align_right slds-p-horizontal_xxx-small">{currentPage} of {totalPages}</div>
+                        <div>
+                            <lightning-button-group>
+                                <lightning-button label="Previous" onclick={handlePrevious} disabled={firstPage}></lightning-button>
+                                <lightning-button label="Next" onclick={handleNext} disabled={lastPage}></lightning-button>
+                            </lightning-button-group>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={showErrorTable}>
+                <div class="slds-p-top_x-large">
+                    <h2>Error Data:</h2>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={displayedErrorData}
+                        columns={columns}
+                        hide-checkbox-column
+                    ></lightning-datatable>
+                    <div class="slds-m-top_medium slds-size_xx-small slds-grid slds-grid_vertical">
+                        <div class="slds-text-align_right slds-p-horizontal_xxx-small">{currentErrorPage} of {totalErrorPages}</div>
+                        <div>
+                            <lightning-button-group>
+                                <lightning-button label="Previous" onclick={handleErrorPrevious} disabled={firstErrorPage}></lightning-button>
+                                <lightning-button label="Next" onclick={handleErrorNext} disabled={lastErrorPage}></lightning-button>
+                            </lightning-button-group>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={showTable}>
+                <template if:false={showErrorTable}>
+                    <div>
+                        <span class="slds-align_absolute-center slds-text-heading_small">No Error Found In Data</span>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>
